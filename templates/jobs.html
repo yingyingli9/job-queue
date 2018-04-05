@@ -1,0 +1,74 @@
+<!doctype html>
+<html>
+	<head>
+		<style>
+			table, th, td {
+			    border: 1px solid black;
+			    border-collapse: collapse;
+			}
+			th, td {
+			    padding: 5px;
+			    text-align: left;    
+			}
+		</style>
+	</head>
+	<body>
+	</body>
+
+	<form action='/add_job' method='POST' id='add_item_form'>
+          URL:<input type='text' id='url' name='url' required>
+          <button type='submit' class="btn btn-primary btn-sm">Add Job</button>
+ 	</form>
+
+ 	<form action='/get_status' method='POST' id='getJobStatus'>
+          Job ID:<input type='number' id='job_id' name='job_id' required>
+          <button type='submit' class="btn btn-primary btn-sm">Get Job Status</button>
+ 	</form>
+	<div id='job_status'></div>
+	<table style="width:70%">
+		<tr>
+			<th>
+				Job ID
+			</th>
+			<th>
+				URL
+			</th>
+			<th>
+				Status
+			</th>
+			<th>
+			</th>
+			<th>
+			</th>
+			<!-- <th>
+				Content
+			</th> -->
+		</tr>
+
+		<div id='new_job'></div>
+
+		{% for job in jobs %}
+			<tr>
+				<td>
+					{{ job.job_id }}
+				</td>
+				<td>
+					{{ job.url }}
+				</td>
+				<td id="{{ job.job_id }}">	
+				</td>
+				<td>
+					<button type="button" id="view_status{{ job.job_id }}"> View Status</button>
+				</td>
+				<td>
+					<button type="button" id="view_response{{ job.job_id }}"> View Response</button>
+				</td>
+				
+			</tr>
+		{% endfor %}
+	</table>
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	<script src="/static/view_status.js"></script>
+</html>
+
+<!-- <script src="static/add_job.js"></script> -->
