@@ -54,6 +54,17 @@ def get_status():
 		# content = None
 	return jsonify({'job_status': status, "job_id": job_id})
 
+@app.route("/get_response", methods=["POST"])
+def get_response():
+	"""Open a new page that displays response as HTML of a certain job."""
+	job_id = request.form.get("job_id")
+	# handle invalid case
+	responses = Response.query.filter_by(job_id=job_id).all()
+	html_content = ""
+	for response in responses:
+		html_content += response.content
+	return jsonify({"job_id": job_id, "response": html_content})
+
 
 
 
