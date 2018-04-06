@@ -17,8 +17,12 @@ function getInfo(evt) {
 }
 
 function displayResponse(result) {
-	var w = window.open();
-	$(w.document.body).html(result.response);
-
-
+	if (result.response == "") {
+		alert("Response for this job is not available.");
+	}
+	else {
+		var w = window.open();
+		w.document.write(`<TITLE>Job ${result.job_id}</TITLE>`);
+		$(w.document).text(result.response);
+	}
 }

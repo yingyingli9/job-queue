@@ -44,8 +44,6 @@ def get_status():
 	job_id = request.form.get("job_id")
 	job = Job.query.get(int(job_id))
 	if job.status == 1:
-		# contents = Response.query.filter_by(job_id=job_id)
-		# html_content = "".join(contents)
 		status = "Completed"
 	if job.status == 0:
 		status = "Not Completed"
@@ -53,6 +51,7 @@ def get_status():
 		status = "Invalid"
 		# content = None
 	return jsonify({'job_status': status, "job_id": job_id})
+
 
 @app.route("/get_response", methods=["POST"])
 def get_response():
@@ -65,6 +64,27 @@ def get_response():
 		html_content += response.content
 	return jsonify({"job_id": job_id, "response": html_content})
 
+@app.route("/get_status_response", methods=["POST"])
+def get_status_response():
+	"""Display the status of a certain job. If status is completed, also get its response"""
+	job_id = request.form.get("job_id")
+	job = Job.query.get(int(job_id))
+	html_content = ""
+
+	if job.status == 1:
+		status = "Completed"
+		responses = Response.query.filter_by(job_id=job_id).all()
+		for response in responses:
+			html_content += response.content
+
+	if job.status == 0:
+		status = "Not Completed"
+
+	if job.status == -1:
+		status = "Invalid"
+		# content = None
+	return jsonify({'job_status': status, "job_id": job_id, "html_content": html_content})
+
 
 
 
@@ -75,8 +95,8 @@ def get_response():
 if __name__ == "__main__":
 
 	# Create job processor
-	# jobProcessor = JobProcessor()
-	# jobProcessor.start()
+	jobProcessor = JobProcessor()
+	jobProcessor.start()
     # We have to set debug=True here, since it has to be True at the
     # point that we invoke the DebugToolbarExtension
     # app.debug = True
