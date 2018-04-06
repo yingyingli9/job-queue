@@ -12,7 +12,7 @@ class JobProcessor(Thread):
 		while True:
 		# fetch all jobs with status as 0
 			incompleted_jobs = Job.query.filter_by(status=0).all()
-			print("size: " + str(len(incompleted_jobs)))
+			# print("size: " + str(len(incompleted_jobs)))
 			# request the url
 			for job in incompleted_jobs:
 				print(job.url)
@@ -47,6 +47,6 @@ class JobProcessor(Thread):
 				else:
 					job.status = -1
 					db.session.commit()
-					print "I should not be here."
+					# print "I should not be here."
 			time.sleep(5)
 

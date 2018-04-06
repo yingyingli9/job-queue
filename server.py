@@ -43,6 +43,8 @@ def get_status():
 	"""Display the status of a certain job."""
 	job_id = request.form.get("job_id")
 	job = Job.query.get(int(job_id))
+	if not job:
+		return jsonify({"stop_process": True, "message": "Please enter a valid job id."})
 	if job.status == 1:
 		status = "Completed"
 	if job.status == 0:
@@ -64,10 +66,15 @@ def get_response():
 		html_content += response.content
 	return jsonify({"job_id": job_id, "response": html_content})
 
+
 @app.route("/get_status_response", methods=["POST"])
 def get_status_response():
 	"""Display the status of a certain job. If status is completed, also get its response"""
 	job_id = request.form.get("job_id")
+
+	if not job_id.isdigit():
+		return jsonify({"stop_process": True, "message": "Please enter a valid job id."})
+
 	job = Job.query.get(int(job_id))
 	html_content = ""
 
@@ -83,7 +90,7 @@ def get_status_response():
 	if job.status == -1:
 		status = "Invalid"
 		# content = None
-	return jsonify({'job_status': status, "job_id": job_id, "html_content": html_content})
+	return jsonify({'job_status': status, "job_id": job_id, "response": html_content})
 
 
 

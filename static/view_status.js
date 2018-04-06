@@ -47,15 +47,18 @@ function getID(evt) {
 }
 
 function popResponse(result) {
-	let statement = `Job ${result.job_id} is ${result.job_status}`;
-
-	$('#job_status').html(statement);
-
-	if (result.job_status == "Completed") {
-		var w = window.open();
-		w.document.write(`<TITLE>Job ${result.job_id}</TITLE>`);
-		$(w.document.body).text(result.html_content);
+	if (result.stop_process) {
+		alert(result.message)
+	} else {
+		let statement = `Job ${result.job_id} is ${result.job_status}`;
+		alert(statement);
+		if (result.job_status == "Completed") {
+			// var w = window.open('data:text/plain;charset=utf-8,' + result.response);
+			var w = window.open();
+			$(w.document.body).text(result.response);
+			w.document.title = `Job ${result.job_id}`;
+		}
 	}
-
+	$('#job_id').val('');
 }
 

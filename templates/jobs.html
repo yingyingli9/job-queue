@@ -12,31 +12,33 @@
 			    float: none;
 
 			}
+
+			table {
+				margin-top: 35px;
+			}
 			th, td {
 			    padding: 5px;
 			    text-align: left;  
 			}
 
-			form {
-				margin-top: 15px;
-				margin-bottom: 15px;
-				margin: 0px auto;
+			.small-margin {
+				margin-top: 10px;
+				margin-left: 15px;
 			}
 		</style>
 	</head>
 	<body>
 	</body>
 
-	<form action='/add_job' method='POST' id='add_item_form'>
+	<form action='/add_job' class='small-margin' method='POST' id='add_item_form'>
           URL<input type='text' id='url' name='url' required>
           <button type='submit'>Add Job</button>
  	</form>
 
- 	<form action='/get_status' method='POST' id='getJobStatus'>
+ 	<form action='/get_status' class='small-margin' method='POST' id='getJobStatus'>
           Job ID<input type='number' id='job_id' name='job_id' required>
           <button type='submit'>Get Job Status</button>
  	</form>
-	<div id='job_status'></div>
 	<table style="width:70%">
 		<tr>
 			<th>
@@ -52,9 +54,6 @@
 			</th>
 			<th>
 			</th>
-			<!-- <th>
-				Content
-			</th> -->
 		</tr>
 
 		<div id='new_job'></div>
@@ -83,5 +82,3 @@
 	<script src="/static/view_status.js"></script>
 	<script src="/static/view_response.js"></script>
 </html>
-
-<!-- <script src="static/add_job.js"></script> -->

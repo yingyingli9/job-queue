@@ -21,8 +21,11 @@ function displayResponse(result) {
 		alert("Response for this job is not available.");
 	}
 	else {
+		// var w = window.open();
+		// w.document.write("<PLAINTEXT>")
+		// w.document.write(result.response)
 		var w = window.open();
-		w.document.write(`<TITLE>Job ${result.job_id}</TITLE>`);
-		$(w.document).text(result.response);
+		$(w.document.body).text(result.response);
+		w.document.title = `Job ${result.job_id}`;
 	}
 }
