@@ -30,12 +30,12 @@
 	<body>
 	</body>
 
-	<form action='/add_job' class='small-margin' method='POST' id='add_item_form'>
+	<form action='/job' class='small-margin' method='POST' id='add_item_form'>
           URL<input type='text' id='url' name='url' required>
           <button type='submit'>Add Job</button>
  	</form>
 
- 	<form action='/get_status' class='small-margin' method='POST' id='getJobStatus'>
+ 	<form action='/job/info' class='small-margin' method='GET' id='getJobStatus'>
           Job ID<input type='number' id='job_id' name='job_id' required>
           <button type='submit'>Get Job Status</button>
  	</form>

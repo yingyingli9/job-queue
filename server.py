@@ -22,7 +22,7 @@ def display_jobs():
 
 	return render_template("jobs.html", jobs = jobs)
 
-@app.route("/add_job", methods=["POST"])
+@app.route("/job", methods=["POST"])
 def add_job():
 	"""Add job to the queue."""
 	url = request.form.get("url")
@@ -38,11 +38,12 @@ def add_job():
 
 	return redirect("/")
 
-@app.route("/get_status", methods=["POST"])
+@app.route("/job/status", methods=["GET"])
 def get_status():
 	"""Display the status of a certain job."""
-	job_id = request.form.get("job_id")
+	job_id = request.args.get("job_id")
 	job = Job.query.get(int(job_id))
+	# job_id = job_id
 	if not job:
 		return jsonify({"stop_process": True, "message": "Please enter a valid job id."})
 	if job.status == 1:
@@ -51,14 +52,16 @@ def get_status():
 		status = "Not Completed"
 	if job.status == -1:
 		status = "Invalid"
+	if job.status == -2:
+		status = "Processing"
 		# content = None
 	return jsonify({'job_status': status, "job_id": job_id})
 
 
-@app.route("/get_response", methods=["POST"])
+@app.route("/job/response", methods=["GET"])
 def get_response():
 	"""Open a new page that displays response as HTML of a certain job."""
-	job_id = request.form.get("job_id")
+	job_id = request.args.get("job_id")
 	# handle invalid case
 	responses = Response.query.filter_by(job_id=job_id).all()
 	html_content = ""
@@ -67,10 +70,10 @@ def get_response():
 	return jsonify({"job_id": job_id, "response": html_content})
 
 
-@app.route("/get_status_response", methods=["POST"])
+@app.route("/job/info", methods=["GET"])
 def get_status_response():
 	"""Display the status of a certain job. If status is completed, also get its response"""
-	job_id = request.form.get("job_id")
+	job_id = request.args.get("job_id")
 
 	job = Job.query.get(int(job_id))
 	if not job:
@@ -85,6 +88,9 @@ def get_status_response():
 
 	if job.status == 0:
 		status = "Not Completed"
+		
+	if job.status == -2:
+		status = "Processing"
 
 	if job.status == -1:
 		status = "Invalid"

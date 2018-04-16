@@ -12,7 +12,7 @@ function getInfo(evt) {
 		"job_id": job_id,
 	};
 
-	$.post("/get_status",
+	$.get("/job/status",
 			formInputs,
 			displayStatus);
 }
@@ -40,7 +40,7 @@ function getID(evt) {
 		"job_id": job_id,
 	};
 
-	$.post("/get_status_response",
+	$.get("/job/info",
 			formInputs,
 			popResponse);
 

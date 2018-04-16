@@ -11,7 +11,7 @@ function getInfo(evt) {
 		"job_id": job_id,
 	};
 
-	$.post("/get_response",
+	$.get("/job/response",
 			formInputs,
 			displayResponse);
 }

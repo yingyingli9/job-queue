@@ -15,7 +15,8 @@ class JobProcessor(Thread):
 			# print("size: " + str(len(incompleted_jobs)))
 			# request the url
 			for job in incompleted_jobs:
-				print(job.url)
+				job.status = -2
+				db.session.commit()
 				if job.url[:4] != 'http':
 					url = 'http://' + job.url
 				else:
